@@ -12,11 +12,11 @@ services:
 
     # 使用するポートの設定
     ports:
-      - "8000:8080"
+      - "8000:8000"
 
     # 対話的なセッションやコマンドラインの操作を許可する
     tty: true
 
     volumes:
       # ローカルの作業ディレクトリと仮想環境の作業ディレクトリの対応づけ
-      - /Users/inabahayato/Desktop/vegeket-app-django:/root/workspace
+      - ${SRC_PATH}:/root/workspace
