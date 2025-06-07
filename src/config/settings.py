@@ -44,7 +44,7 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / "templates"],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -105,4 +105,20 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-STATICFILES_DIRS = [BASE_DIR / 'static'] # 追記
+STATICFILES_DIRS = [BASE_DIR /'static'] # 追記
+
+# 消費税率
+TAX_RATE = 0.1
+
+STRIPE_API_SECRET_KEY = env.str('STRIPE_API_SECRET_KEY')
+
+# カスタムユーザーモデル
+AUTH_USER_MODEL = 'base.User'
+
+LOGIN_URL = '/login/'
+ 
+LOGIN_REDIRECT_URL = '/'
+ 
+LOGOUT_URL = '/logout/'
+ 
+LOGOUT_REDIRECT_URL = '/login/'
