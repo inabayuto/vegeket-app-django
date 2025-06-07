@@ -83,7 +83,7 @@ python manage.py migrate
 ## 4. 開発サーバーの起動
 
 ```sh
-docker-compose exec web python manage.py runserver 0.0.0.0:8000
+python manage.py runserver 0.0.0.0:8000
 ```
 
 - ブラウザで [http://0.0.0.0:8000/](http://0.0.0.0:8000/) にアクセスして動作確認できます。
