@@ -1,3 +1,6 @@
+# アカウント関連のビューをまとめたファイル。
+# ユーザー登録、ログイン、アカウント情報・プロフィール編集のViewを定義。
+
 from typing import Any
 from django.contrib.auth.forms import AuthenticationForm
 from django.db.models.base import Model as Model
@@ -11,6 +14,7 @@ from django.contrib.auth import get_user_model
 from base.models import Profile
 from base.forms import UserCreationForm
 
+# ユーザー新規登録用のView。CreateViewを継承し、Userモデルとカスタムフォームを利用。
 class SignUpView(CreateView):
     model = get_user_model()
     form_class =  UserCreationForm
@@ -20,7 +24,7 @@ class SignUpView(CreateView):
     def form_valid(self, form):
         return super().form_valid(form)
 
-
+# ログイン用のView。Django標準のLoginViewを継承。
 class Login(LoginView):
     template_name = 'pages/login_signup.html'
 
@@ -30,7 +34,7 @@ class Login(LoginView):
     def form_invalid(self, form):
         return super().form_invalid(form)
 
-
+# アカウント情報（ユーザー名・メールアドレス）編集用のView。
 class AccountUpdateView(LoginRequiredMixin, UpdateView):
     model = get_user_model()
     template_name = 'pages/account.html'
@@ -42,6 +46,7 @@ class AccountUpdateView(LoginRequiredMixin, UpdateView):
         self.kwargs['pk'] = self.request.user.pk
         return super().get_object()
 
+# プロフィール情報編集用のView。
 class ProfileUpdateView(LoginRequiredMixin, UpdateView):
     model = Profile
     template_name = 'pages/profile.html'
