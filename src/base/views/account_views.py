@@ -13,6 +13,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import get_user_model
 from base.models import Profile
 from base.forms import UserCreationForm
+from django.contrib import messages
 
 # ユーザー新規登録用のView。CreateViewを継承し、Userモデルとカスタムフォームを利用。
 class SignUpView(CreateView):
@@ -22,6 +23,7 @@ class SignUpView(CreateView):
     template_name = 'pages/login_signup.html'
 
     def form_valid(self, form):
+        messages.success(self.request, 'ユーザー登録が完了しました。')
         return super().form_valid(form)
 
 # ログイン用のView。Django標準のLoginViewを継承。
@@ -29,9 +31,11 @@ class Login(LoginView):
     template_name = 'pages/login_signup.html'
 
     def form_valid(self, form):
+        messages.success(self.request, 'ログインしました。')
         return super().form_valid(form)
 
     def form_invalid(self, form):
+        messages.error(self.request, 'ログインに失敗しました。')
         return super().form_invalid(form)
 
 # アカウント情報（ユーザー名・メールアドレス）編集用のView。
@@ -46,6 +50,10 @@ class AccountUpdateView(LoginRequiredMixin, UpdateView):
         self.kwargs['pk'] = self.request.user.pk
         return super().get_object()
 
+    def form_valid(self, form):
+        messages.success(self.request, 'アカウント情報を更新しました。')
+        return super().form_valid(form)
+
 # プロフィール情報編集用のView。
 class ProfileUpdateView(LoginRequiredMixin, UpdateView):
     model = Profile
@@ -58,3 +66,7 @@ class ProfileUpdateView(LoginRequiredMixin, UpdateView):
         # URL変数ではなく、現在のユーザーから直接pkを取得
         self.kwargs['pk'] = self.request.user.pk
         return super().get_object()
+
+    def form_valid(self, form):
+        messages.success(self.request, 'プロフィール情報を更新しました。')
+        return super().form_valid(form)
